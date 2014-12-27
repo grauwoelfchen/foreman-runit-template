@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+LOG=<%= log %>/<%= name %>-<%= num %>
+
+RUNIT_USER=`whoami`
+COMMAND="svlogd -t '$LOG'"
+
+test -d "$LOG" || mkdir -p -m755 "$LOG" && chown <%= user %> "$LOG"
+
+if [ "$RUNIT_USER" = "<%= user %>" ]; then
+  exec $COMMAND
+else
+  exec chpst -u <%= user %> $COMMAND
+fi

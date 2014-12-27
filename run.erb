@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cd <%= engine.root %>
+exec 2>&1
+
+RUNIT_USER=`whoami`
+ENV_FILE="<%= File.join(location, "#{process_directory}/env") %>
+COMMAND=<%= process.command %>"
+
+if [ "$RUNIT_USER" = "<%= user %>" ]; then
+  exec chpst -e $ENV_FILE $COMMAND
+else
+  exec chpst -u <%= user %> -e $ENV_FILE $COMMAND
+fi;

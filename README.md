@@ -14,7 +14,7 @@ namespace :foreman do
         execute :bundle, <<-CMD.gsub(/\s{2}/, "")
 exec \
 foreman export runit /path/to/service \
-  -f ./Procfile
+  -f ./Procfile \
   -a #{fetch(:application)} \
   -l #{shared_path.join("log")} \
   -u #{host.user} \
